@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OER-Ideen-Generator</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #2e1a47; /* dunkles Violett */
+      color: #f0e6ff; /* helle Schrift */
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 1rem;
+    }
+    .container {
+      max-width: 800px;
+      font-size: 1.8rem;
+      line-height: 1.6;
+    }
+    .clickable {
+      cursor: pointer;
+      border-bottom: 2px dotted #a87ffb;
+      transition: color 0.3s;
+    }
+    .clickable:hover {
+      color: #ffffff;
+    }
+    @media (max-width: 600px) {
+      .container {
+        font-size: 2rem;
+        line-height: 1.4;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    Wie wäre es, wenn du <br>
+    <span id="action" class="clickable" onclick="rotate('action')"></span>,<br>
+    <span id="topic" class="clickable" onclick="rotate('topic')"></span>,<br>
+    <span id="goal" class="clickable" onclick="rotate('goal')"></span>
+  </div>
+
+  <script>
+    const actions = [
+      "eine einfache Skizze erstellst",
+      "eine Schritt-für-Schritt-Anleitung schreibst",
+      "ein Erklärvideo aufnimmst",
+      "eine Reflexion notierst",
+      "eine Audio-Notiz teilst",
+      "ein Kartenset entwickelst",
+      "ein Glossar zusammenstellst",
+      "einen H5P-Inhalt gestaltest",
+      "ein Spiel entwickelst",
+      "ein Tool programmierst",
+      "ein bestehendes OER weiter entwickelst",
+            "eine Website gestaltest",
+                        "einen Blog einrichtest",
+      "eine Ideensammlung zusammenträgst",
+      "eine kleine Geschichte überlegst",
+            "einen Wikipedia-Artikel überarbeitest",
+      "einen Comic zeichnest",
+       "eine kollaborative Website anlegst",
+      "eine Bilderreihe promptest",
+      "einen Mini-Podcast produzierst",
+         "hilfreiche Fragen formulierst",
+      "ein visuelles Zitat erstellst",
+      "eine weiternutzbare Vorlage erstellst",
+      "einen Kurs konzipierst",
+      "einen Text schreibst",
+      "eine Selbstüberprüfung überlegst"
+    ];
+
+const topics = [
+  "über ein Thema, zu dem du zuletzt gelernt hast",
+  "zu den Ideen einer Bildung für Nachhaltige Entwicklung",
+  "über eine gewonnene Erfahrung von dir beim Lehren",
+  "zu einer Methode, die dir besonders gut gefällt",
+  "über ein digitales Tool, das du gerne nutzt",
+  "über einen Fehler, den du gemacht hast",
+  "über deine Zusammenarbeit mit anderen",
+  "über ein Thema, das du dir selbst neu erschließen willst",
+  "über deine Erfahrungen mit OER",
+  "über ein Konzept, das du entwickelt hast",
+  "über Feedbackformen, die du hilfreich findest",
+  "über eine Fortbildung, die dich weitergebracht hat",
+  "über eine Perspektive auf Lernen, die dir wichtig ist",
+  "über deine Haltung in der Bildungsarbeit",
+  "über eine Veränderung in deiner pädagogischen Praxis",
+  "über einen Aha-Moment beim Lernen oder Lehren",
+  "über eine Hospitation, an der du teilgenommen hast",
+  "über deinen Umgang mit digitalen Herausforderungen",
+  "über etwas, das du gerne früher gewusst hättest",
+  "über eine gelungene Beteiligung von Lernenden",
+  "über deine besten Hacks zum Lehren und Lernen",
+  "über Lernfreude",
+    "über ein Thema, das du ohnehin bearbeiten wolltest",
+    "über deine Definition von guter Bildung",
+  "über deinen Umgang mit Komplexität",
+  "über Kreativität und was das für dich in der Bildung bedeutet",
+  "über eine Situation, in der du neu denken musstest",
+  "über deine Motivation, pädagogisch aktiv zu sein",
+  "über ein Material, das du besonders gerne nutzt oder weitergibst",
+  "über eine Erfahrung, die deine Sicht auf Lernen verändert hat"
+];
+
+
+
+const goals = [
+  "damit andere davon profitieren können.",
+  "damit du dich selbst weiterentwickelst.",
+  "damit du in Austausch mit anderen kommst.",
+  "damit du Freude bei der Entwicklung empfindest.",
+  "damit du selbst den Umgang mit OER besser lernst.",
+  "damit du sicherer bei der Materialentwicklung wirst.",
+  "damit du deine eigenen Gedanken sortierst.",
+  "damit du deine Erfahrungen bewusster reflektierst.",
+  "damit du deine Ideen sichtbar machst.",
+  "damit du dich kreativ ausprobieren kannst.",
+  "damit du deine Perspektive mit anderen teilst.",
+  "damit du Rückmeldung von Kolleg*innen bekommst.",
+  "damit du motiviert bleibst, Neues zu lernen.",
+  "damit du konkrete Ergebnisse deiner Arbeit siehst.",
+  "damit du deine eigene Entwicklung dokumentierst.",
+  "damit du einfacher auf dein Wissen zurückgreifen kannst.",
+  "damit du dich in einem Thema vertiefst.",
+  "damit du Routinen für Materialerstellung entwickelst.",
+  "damit du mehr Klarheit über dein pädagogisches Handeln gewinnst.",
+  "damit du deine Inhalte selbstbestimmt gestalten kannst.",
+  "damit Kolleg*innen neue Impulse bekommen.",
+  "damit dein Wissen zugänglich wird.",
+  "damit du Feedback von anderen bekommst.",
+  "damit du zur digitalen Wissensallmende beiträgst.",
+  "damit aus Ideen mehr entstehen kann.",
+  "damit sich andere davon inspirieren lassen können.",
+  "damit der Einstieg für andere leichter wird.",
+  "damit Lernen gemeinsam weiterentwickelt wird.",
+  "damit Austausch entstehen kann.",
+  "damit deine Erfahrungen weitergetragen werden.",
+  "damit gemeinsames Lernen unterstützt wird.",
+  "damit pädagogische Vielfalt sichtbar wird.",
+  "damit konkrete Praxisbeispiele zugänglich werden.",
+  "damit auch andere etwas ausprobieren können."
+];
+
+
+    let indices = {
+      action: 0,
+      topic: 0,
+      goal: 0
+    };
+
+    function updateText() {
+      document.getElementById('action').innerText = actions[indices.action];
+      document.getElementById('topic').innerText = topics[indices.topic];
+      document.getElementById('goal').innerText = goals[indices.goal];
+    }
+
+    function rotate(part) {
+      indices[part] = (indices[part] + 1) % eval(part + 's').length;
+      updateText();
+    }
+
+    updateText();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
